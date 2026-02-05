@@ -1,0 +1,4 @@
+El diagrama representa un algoritmo de filtrado colaborativo basado en co-ocurrencias. Inicialmente, se valida la existencia del usuario dentro del sistema.
+A partir del conjunto de productos adquiridos por el usuario objetivo, el algoritmo identifica usuarios con intersección no vacía de productos mediante operaciones de conjuntos.
+Los productos adicionales adquiridos por estos usuarios se agregan a un contador de frecuencias, excluyendo explícitamente los productos ya comprados.
+Finalmente, los productos se ordenan por frecuencia de aparición, produciendo un ranking de recomendaciones que refleja patrones de comportamiento compartido entre usuarios.
