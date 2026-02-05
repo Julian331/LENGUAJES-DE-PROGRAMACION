@@ -1,0 +1,43 @@
+from collections import defaultdict, Counter
+
+class RecommendationSystem:
+    def __init__(self):
+        # usuario -> set de productos
+        self.user_purchases = defaultdict(set)
+
+    def addPurchase(self, usuario, producto):
+        self.user_purchases[usuario].add(producto)
+
+    def getRecommendations(self, usuario, top_n=3):
+        if usuario not in self.user_purchases:
+            return []
+
+        purchased = self.user_purchases[usuario]
+        recommendation_counter = Counter()
+
+        for other_user, other_products in self.user_purchases.items():
+            if other_user == usuario:
+                continue
+
+            # Productos en común
+            if purchased & other_products:
+                # Productos nuevos para recomendar
+                for product in other_products - purchased:
+                    recommendation_counter[product] += 1
+
+        return [product for product, _ in recommendation_counter.most_common(top_n)]
+    
+system = RecommendationSystem()
+
+system.addPurchase("Ana", "Laptop")
+system.addPurchase("Ana", "Mouse")
+
+system.addPurchase("Luis", "Laptop")
+system.addPurchase("Luis", "Teclado")
+
+system.addPurchase("Marta", "Laptop")
+system.addPurchase("Marta", "Mouse")
+system.addPurchase("Marta", "Monitor")
+
+print(system.getRecommendations("Ana"))  
+
