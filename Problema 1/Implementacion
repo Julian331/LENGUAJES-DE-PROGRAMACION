@@ -1,0 +1,63 @@
+class WebNavigator:
+    def __init__(self):
+        self.back_stack = []      # Historial hacia atrás
+        self.forward_stack = []   # Historial hacia adelante
+        self.current_page = None  # Página actual
+
+    def loadPage(self, url):
+        if self.current_page:
+            self.back_stack.append(self.current_page)
+        self.current_page = url
+        self.forward_stack.clear()
+        print(f"Página cargada: {self.current_page}")
+
+    def goBack(self):
+        if not self.back_stack:
+            print("No hay páginas anteriores.")
+            return
+        self.forward_stack.append(self.current_page)
+        self.current_page = self.back_stack.pop()
+        print(f"Retrocediendo a: {self.current_page}")
+
+    def goForward(self):
+        if not self.forward_stack:
+            print("No hay páginas siguientes.")
+            return
+        self.back_stack.append(self.current_page)
+        self.current_page = self.forward_stack.pop()
+        print(f"Avanzando a: {self.current_page}")
+
+    def showStatus(self):
+        print(f"Página actual: {self.current_page}")
+        print(f"Historial atrás: {self.back_stack}")
+        print(f"Historial adelante: {self.forward_stack}")
+
+    def showMenu(self):
+        while True:
+            print("\nMenú:")
+            print("1. Cargar página")
+            print("2. Retroceder")
+            print("3. Avanzar")
+            print("4. Mostrar estado")
+            print("5. Salir")
+            choice = input("Seleccione una opción: ")
+
+            if choice == '1':
+                url = input("Ingrese la URL de la página: ")
+                self.loadPage(url)
+            elif choice == '2':
+                self.goBack()
+            elif choice == '3':
+                self.goForward()
+            elif choice == '4':
+                self.showStatus()
+            elif choice == '5':
+                print("Saliendo...")
+                break
+            else:
+                print("Opción no válida. Intente de nuevo.")
+
+
+# Ejemplo de uso
+navigator = WebNavigator()
+navigator.showMenu()
